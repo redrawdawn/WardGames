@@ -1,8 +1,15 @@
 import { useParams } from "react-router-dom";
 
-export const GameDetail = () => {
-    const {id} = useParams();
+export const GameDetail = (props) => {
+    //let {id} = useParams()
+
     return (
-    <>hello {id}</>
+    <>
+    
+    <img src={props.game.thumb_url} width="100px"/>
+            
+        hello {props.game.id}<br />
+        {props.game.thumb_url}
+    </>
     )
 }
