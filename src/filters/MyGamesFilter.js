@@ -17,10 +17,12 @@ export const MyGamesFilter = ({gameFilters, setGameFilters}) => {
     return (<>
         <div 
             //className={gameFilters.myGamesOnly ? "" : "selected"}
-            onClick={() => setMyGamesOnlyFilter(false)}>All Games</div>
+            onClick={() => setMyGamesOnlyFilter(false)}>All Game
+        </div>
         <div 
             //className={gameFilters.myGamesOnly ? "selected" : ""} 
-            onClick={() => setMyGamesOnlyFilter(true)}>My Games</div>
+            onClick={() => setMyGamesOnlyFilter(true)}>My Games
+        </div>
     </>)
 }
 
