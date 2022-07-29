@@ -1,11 +1,12 @@
+import { Button } from "bootstrap";
 import { useState } from "react";
-import { Modal, ModalBody } from "reactstrap"
+import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap"
 import { GameDetail } from "./GameDetail"
 
 export const Game = ({game}) => {
-    const [showGameDetail, setShowGameDetail] = useState(false);
+    const [modal, setModal] = useState(false);
     //handle click :::: details pop up
-    const toggle = () => setShowGameDetail(!showGameDetail)
+    const toggle = () => setModal(!modal)
 
     return (
         <>
@@ -14,13 +15,21 @@ export const Game = ({game}) => {
             </div>
             <a href={"/games/" + game.id} className="game-card">{game.handle}</a>
             <br />
+
+
         
-            <Modal isOpen={showGameDetail} toggle={toggle} modalTransition={{ timeout: 2000 }}>
+            <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>{game.handle}</ModalHeader>
                 <ModalBody>
-                    <GameDetail game={game}/> 
+                    <GameDetail game={game}/>
                 </ModalBody>
+                <ModalFooter>
+                    <div onClick={toggle}>Cancel</div>
+                </ModalFooter>
             </Modal>
             
+
+
             <br /><br />
        </>
     )
