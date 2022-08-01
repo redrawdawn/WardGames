@@ -1,15 +1,15 @@
-import { useEffect } from "react"
+
 
 export const MyGamesFilter = ({gameFilters, setGameFilters}) => {
 
     const setMyGamesOnlyFilter = (tf) => { 
-        if (gameFilters.myGamesOnly === tf) return
+            if (gameFilters.myGamesOnly === tf) return
 
-        let newFilters = { myGamesOnly: tf }
-        setGameFilters(filters => ({
-            ...filters,
-            ...newFilters
-        }))
+            let newFilters = { myGamesOnly: tf }
+            setGameFilters(filters => ({
+                ...filters,
+                ...newFilters
+            }))
     }
 
 
