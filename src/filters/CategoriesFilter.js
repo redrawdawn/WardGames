@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { GetMechanics } from '../modules/LookupsManager'
+import { GetCategories } from '../modules/LookupsManager'
 
 
-export const MechanicsFilter = () => {
-    const [mechanics, setMechanics] = useState([])
+export const CategoriesFilter = () => {
+    const [categories, setCategories] = useState([])
     const [dropdownOpen, setDropdownOpen] = useState(false)
 
     useEffect(() => {
-        GetMechanics().then(m => setMechanics(m))
+        GetCategories().then(m => setCategories(m))
     }, [])
     
 
     return (
         <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
         <DropdownToggle caret color="dark">
-          Mechanics
+          Categories
         </DropdownToggle>
         <DropdownMenu dark>
             {
-                mechanics.map(m => {
-                    return <DropdownItem key={m.id}>{m.name}</DropdownItem>
+                categories.map(c => {
+                    return <DropdownItem key={c.id}>{c.name}</DropdownItem>
                 })
             }
           

@@ -2,9 +2,9 @@ import { Game } from "./Game"
 import { GetGames } from "../modules/GameManager"
 import { useEffect, useState } from "react"
 import { MyGamesFilter } from "../filters/MyGamesFilter"
-import { CategoryFilter } from "../filters/CategoryFilter"
+import { CategoriesFilter } from "../filters/CategoriesFilter"
 import { MechanicsFilter } from "../filters/MechanicsFilter"
-import { NumOfpplayersFilter } from "../filters/NumOfPlayersFIlter"
+import { NumOfPlayersFilter } from "../filters/NumOfPlayersFIlter"
 import { PlayTimeFilter } from "../filters/PlayTimeFilter"
 
 export const GameList = () => {
@@ -12,18 +12,24 @@ export const GameList = () => {
     let [gameFilters, setGameFilters] = useState({})
 
     useEffect(() => {
-        let games = GetGames().then(games => setGames(games))
+        GetGames().then(gs => setGames(gs))
     }, [])
+    
+    useEffect(() => {
+        console.log("game filters changed")
+        GetGames(gameFilters).then(gs => setGames(gs))
+    }, [gameFilters])
     
     return (
             <>
                 <MyGamesFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
                 <br />
                 <div className="filters-div">
-                    <NumOfpplayersFilter />
-                    <PlayTimeFilter />
-                    <CategoryFilter />
+                    <NumOfPlayersFilter gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                    <PlayTimeFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
+                    <CategoriesFilter />
                     <MechanicsFilter />
+                    <button onClick={() => setGameFilters({})}>Clear Filters</button>
                 </div>
                 {
                         games.map(game => 
