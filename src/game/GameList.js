@@ -17,28 +17,27 @@ export const GameList = () => {
 
     useEffect(() => {
         GetGames().then(gs => setGames(gs))
-        
-    }, [])
-    
-    useEffect(()=> {
-        // Get GameIds from MyGames result
         GetMyGames().then(mgi => setMyGameIds(mgi.map(x => x.gameId)))
-    }, [games])
+    }, [])
 
     const setIsMine = (gameId, isMine) => {
         if (isMine) {
-            AddToMyGames(gameId).then(() => 
-                GetMyGames().then(mgi => setMyGameIds(mgi.map(x => x.gameId))))
+            AddToMyGames(gameId).then(() => {
+                let newMyGameIds = [...myGameIds]
+                newMyGameIds.push(gameId)
+                setMyGameIds(newMyGameIds)
+            })
         } else {
-            RemoveFromMyGames(gameId, isMine).then(() => 
-                GetMyGames().then(mgi => setMyGameIds(mgi.map(x => x.gameId)))
-            )
+            RemoveFromMyGames(gameId, isMine).then(() => {
+                let newMyGameIds = myGameIds.filter((value) => value !== gameId)
+                setMyGameIds(newMyGameIds)
+            })
         }
     }
 
     useEffect(() => {
         GetGames(gameFilters).then(gs => setGames(gs))
-    }, [gameFilters])
+    }, [gameFilters, myGameIds])
     
     if (games.length == 0) {
         return <>

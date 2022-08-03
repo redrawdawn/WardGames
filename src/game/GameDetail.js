@@ -1,8 +1,6 @@
 import React from "react";
-import './gameDetail.css';
 
-export const GameDetail = ({game, myGameIds, setIsMine, setMyGameIds}) => {
-//const [showMore, setShowMore] = useState(false);
+export const GameDetail = ({game, myGameIds, setIsMine }) => {
     const isMine = myGameIds.includes(game.id)
     const starIfMine = isMine ? "☑" : "☐" 
 
@@ -14,22 +12,18 @@ export const GameDetail = ({game, myGameIds, setIsMine, setMyGameIds}) => {
             <br />
             
             <span onClick={() =>setIsMine(game.id, !isMine)}>{starIfMine}</span>
-
-            <div dangerouslySetInnerHTML={{__html: game.description}}></div>
-
-            {/* <Collapse isOpen={!showMore} dangerouslySetInnerHTML={{__html: game.description_preview}}></Collapse>
-            <Collapse isOpen={showMore}>
-                <div id="description" dangerouslySetInnerHTML={{__html: game.description}}></div>
-            </Collapse>
-            <button className="btn" onClick={() => setShowMore(!showMore)}>
-                {showMore ? "Show less" : "Show more"}
-            </button> */}
-            <br />
             <br />
             <p>Number of Players:  {!game.players ? "?" : game.players}</p>
             <p>Playtime: {game.playtime} minutes</p>
-            <p>Learning complexity: {Math.round(game.average_learning_complexity)}/5</p>
-            <p>Strategy complexity: {Math.round(game.average_strategy_complexity)}/5</p>
+
+            {/* displays Learning complexity and Strategy complexity rounded to the nearest decimal  */}
+            <p>Learning complexity: {game.average_learning_complexity ? game.average_learning_complexity.toFixed(1) : "?"} / 5</p>
+            <p>Strategy complexity: {game.average_learning_complexity ? game.average_strategy_complexity.toFixed(1) : "?"} / 5</p>
+
+            <br />
+
+            <div dangerouslySetInnerHTML={{__html: game.description}}></div>
+            
     </>
     )
 }

@@ -3,10 +3,11 @@ const remoteURL = "http://localhost:8088"
 export const GetGames = (filters) => {
 
     let query = `${remoteURL}/games?_start=0&_limit=20`
+    
+    //if there are no filters return original query
     if (!filters) 
         return fetch(query)
             .then(res => res.json())
-
 
     //Number Of Players Filter 
     if (filters.numOfPlayers)
@@ -28,9 +29,10 @@ export const GetGames = (filters) => {
     if (filters.searchFilter)
         query += `&handle_like=${filters.searchFilter}`
 
-
+    //My Gmaes filter
     if (!filters.myGamesOnly)
     {
+        //return original query string if My Games is not selected
         return fetch(query)
             .then(res => res.json())
     }
