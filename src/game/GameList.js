@@ -8,6 +8,7 @@ import { NumOfPlayersFilter } from "../filters/NumOfPlayersFIlter"
 import { PlayTimeFilter } from "../filters/PlayTimeFilter"
 import { SearchBar } from "../filters/SearchBar"
 import { AddToMyGames, GetMyGames, RemoveFromMyGames } from "../modules/MyGamesManager"
+import './gameList.css';
 
 export const GameList = () => {
     let [games, setGames] = useState([])
@@ -16,10 +17,14 @@ export const GameList = () => {
 
     useEffect(() => {
         GetGames().then(gs => setGames(gs))
-        // Get GameIds from MyGames result
-        GetMyGames().then(mgi => setMyGameIds(mgi.map(x => x.gameId)))
+        
     }, [])
     
+    useEffect(()=> {
+        // Get GameIds from MyGames result
+        GetMyGames().then(mgi => setMyGameIds(mgi.map(x => x.gameId)))
+    }, [games])
+
     const setIsMine = (gameId, isMine) => {
         if (isMine) {
             AddToMyGames(gameId).then(() => 
@@ -32,31 +37,50 @@ export const GameList = () => {
     }
 
     useEffect(() => {
-        console.log("game filters changed")
-        
         GetGames(gameFilters).then(gs => setGames(gs))
     }, [gameFilters])
     
+    if (games.length == 0) {
+        return <>
+            <div className="allgames-mygames">
+                        <MyGamesFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
+                    </div>
+                    <SearchBar gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+
+                    <br />
+                    <div className="filters-div">
+                        <NumOfPlayersFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                        <PlayTimeFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters} />
+                        <CategoriesFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                        <MechanicsFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                        <button onClick={() => setGameFilters({ myGamesOnly : gameFilters.myGamesOnly})}>Clear Filters</button>
+                    </div>
+            <div>No games found</div>
+        </>
+    } 
+
     return (
             <>
+                <div className="allgames-mygames">
+                    <MyGamesFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
+                </div>
                 <SearchBar gameFilters={gameFilters} setGameFilters={setGameFilters}/>
 
-                <MyGamesFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
                 <br />
                 <div className="filters-div">
-                    <NumOfPlayersFilter gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                    <PlayTimeFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
-                    <CategoriesFilter gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                    <MechanicsFilter gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                    <NumOfPlayersFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                    <PlayTimeFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters} />
+                    <CategoriesFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                    <MechanicsFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
                     <button onClick={() => setGameFilters({ myGamesOnly : gameFilters.myGamesOnly})}>Clear Filters</button>
                 </div>
                 {
-                        games.map(game => 
-                            { 
-                                //return <div key={game.id} className="game-card">{game.handle}</div>
-                                return <Game key={game.id} game={game} setIsMine={setIsMine} myGameIds={myGameIds} setMyGameIds={setMyGameIds}/>
-                            })
+                    games.map(game => 
+                        { 
+                            //return <div key={game.id} className="game-card">{game.handle}</div>
+                            return <Game key={game.id} game={game} setIsMine={setIsMine} myGameIds={myGameIds} setMyGameIds={setMyGameIds}/>
+                        })
                 }
             </>
-         )
+        )
 }
