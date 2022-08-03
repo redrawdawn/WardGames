@@ -3,7 +3,7 @@ import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap"
 import { GameDetail } from "./GameDetail"
 import './game.css';
 
-export const Game = ({game, myGameIds, setIsMine, /* NEEDED? */ setMyGameIds}) => {
+export const Game = ({game, myGameIds, setIsMine }) => {
     const [modal, setModal] = useState(false)
 
     //handle click :::: details pop up
@@ -27,7 +27,7 @@ export const Game = ({game, myGameIds, setIsMine, /* NEEDED? */ setMyGameIds}) =
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>{game.name}</ModalHeader>
                 <ModalBody>
-                    <GameDetail game={game} myGameIds={myGameIds} setIsMine={setIsMine} setMyGameIds={setMyGameIds} />
+                    <GameDetail game={game} myGameIds={myGameIds} setIsMine={setIsMine} />
                 </ModalBody>
                 <ModalFooter>
                     <div onClick={toggle}>Cancel</div>
