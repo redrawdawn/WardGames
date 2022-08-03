@@ -3,7 +3,6 @@ const remoteURL = "http://localhost:8088"
 export const GetGames = (filters) => {
 
     let query = `${remoteURL}/games?_start=0&_limit=20`
-
     if (!filters) 
         return fetch(query)
             .then(res => res.json())
@@ -37,12 +36,16 @@ export const GetGames = (filters) => {
     }
     else
     {
-        debugger
         let currentUser = JSON.parse(localStorage.getItem("wardgames_user"))
-        console.log("currentUser.id from GetMyGames: " + currentUser.id)
         return fetch(`${remoteURL}/myGames?userId=${currentUser.id}`)
             .then(res => res.json())
             .then(myGameIds => {
+                // If I have no games, return a promise that
+                // resolves to an empty array (because the caller
+                // is expecting a promise) 
+                if (!myGameIds || myGameIds.length == 0)
+                    return Promise.resolve([])
+
                 for (let myGameId of myGameIds)
                 {
                     query += "&id=" + myGameId.gameId

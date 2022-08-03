@@ -31,7 +31,7 @@ export const RemoveFromMyGames = (gameId) => {
 
 export const GetMyGames = () => {
     let currentUser = JSON.parse(localStorage.getItem("wardgames_user"))
-    console.log(currentUser.id.toString() + " <- user id")
+    
     return fetch(`${remoteURL}/myGames?userId=${currentUser.id}`)
     .then(result => result.json())
 }

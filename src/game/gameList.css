@@ -1,0 +1,10 @@
+.allgames-mygames {
+    display: flex;
+}
+
+.filters-div {
+    display: flex;
+    width: 100%;
+}
+
+

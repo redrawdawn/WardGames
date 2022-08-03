@@ -1,4 +1,5 @@
-
+import React from "react";
+import { Button } from "reactstrap";
 
 export const MyGamesFilter = ({gameFilters, setGameFilters}) => {
 
@@ -15,14 +16,15 @@ export const MyGamesFilter = ({gameFilters, setGameFilters}) => {
 
 
     return (<>
-        <div 
+        <Button color="dark"
             //className={gameFilters.myGamesOnly ? "" : "selected"}
             onClick={() => setMyGamesOnlyFilter(false)}>All Game
-        </div>
-        <div 
+        </Button>
+
+        <Button color="dark"
             //className={gameFilters.myGamesOnly ? "selected" : ""} 
             onClick={() => setMyGamesOnlyFilter(true)}>My Games
-        </div>
+        </Button>
     </>)
 }
 

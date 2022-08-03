@@ -1,13 +1,7 @@
-import { useState } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row } from 'reactstrap';
 
 export const SearchBar = ({gameFilters, setGameFilters}) => {
-    //const [inputText, setInputText] = useState("")
-
-    // const search = () => {
-    //     console.log("searching...")
-    //     setInputText
-    // }
+    
 
     const setFilterValue = () => {
         let name = document.querySelector("#searchBarInput").value
