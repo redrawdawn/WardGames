@@ -9,14 +9,26 @@ export const GetGames = (filters) => {
             .then(res => res.json())
 
 
-            
+    //Number Of Players Filter 
     if (filters.numOfPlayers)
         query += `&min_players_lte=${filters.numOfPlayers}&max_players_gte=${filters.numOfPlayers}`
 
+    //Playtime Filter
     if (filters.playTimeFilter)
         query += `&min_playtime_lte=${filters.playTimeFilter}&max_playtime_gte=${filters.playTimeFilter}`
     
-        // TODO: Add other filters here
+    //Mechanics Filter    
+    if (filters.mechanicsFilter)
+        query += `&q=${filters.mechanicsFilter}`
+
+    //Categories Filter    
+    if (filters.categoriesFilter)
+        query += `&q=${filters.categoriesFilter}`
+
+    //Search Filter
+    if (filters.searchFilter)
+        query += `&handle_like=${filters.searchFilter}`
+
 
     if (!filters.myGamesOnly)
     {
@@ -25,7 +37,9 @@ export const GetGames = (filters) => {
     }
     else
     {
-        let currentUser = { id : 3 } // TODO: Get this from session storage
+        debugger
+        let currentUser = JSON.parse(localStorage.getItem("wardgames_user"))
+        console.log("currentUser.id from GetMyGames: " + currentUser.id)
         return fetch(`${remoteURL}/myGames?userId=${currentUser.id}`)
             .then(res => res.json())
             .then(myGameIds => {
@@ -35,7 +49,6 @@ export const GetGames = (filters) => {
                 }
                 return fetch(query)
                     .then(res => res.json())
-                    //.then(games => games)
                 })
     }
 }

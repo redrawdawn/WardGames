@@ -18,8 +18,7 @@ export const Login = () => {
                     localStorage.setItem("wardgames_user", JSON.stringify({
                         id: user.id
                     }))
-
-                    navigate("/")
+                    navigate("/gamelist")
                 }
                 else {
                     window.alert("Invalid login")

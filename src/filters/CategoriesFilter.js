@@ -3,7 +3,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { GetCategories } from '../modules/LookupsManager'
 
 
-export const CategoriesFilter = () => {
+export const CategoriesFilter = ({gameFilters, setGameFilters}) => {
     const [categories, setCategories] = useState([])
     const [dropdownOpen, setDropdownOpen] = useState(false)
 
@@ -11,6 +11,16 @@ export const CategoriesFilter = () => {
         GetCategories().then(m => setCategories(m))
     }, [])
     
+    const setFilterValue = (id) => {
+        if (gameFilters.categoriesFilter && gameFilters.categoriesFilter === id) return
+
+        let newFilters = { categoriesFilter: id }
+        setGameFilters(filters => ({
+            ...filters,
+            ...newFilters
+        }))
+    }
+
 
     return (
         <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
@@ -20,7 +30,7 @@ export const CategoriesFilter = () => {
         <DropdownMenu dark>
             {
                 categories.map(c => {
-                    return <DropdownItem key={c.id}>{c.name}</DropdownItem>
+                    return <DropdownItem key={c.id}><div onClick={() => setFilterValue(c.id)}>{c.name}</div></DropdownItem>
                 })
             }
           

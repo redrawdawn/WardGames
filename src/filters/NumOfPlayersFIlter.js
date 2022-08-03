@@ -4,10 +4,10 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 export const NumOfPlayersFilter = ({gameFilters, setGameFilters}) => {
     const [dropdownOpen, setDropdownOpen] = useState(false)
 
-    const setFilterValue = (minutes) => {
-        if (gameFilters.numOfPlayers && gameFilters.numOfPlayers === minutes) return
+    const setFilterValue = (players) => {
+        if (gameFilters.numOfPlayers && gameFilters.numOfPlayers === players) return
 
-        let newFilters = { numOfPlayers: minutes }
+        let newFilters = { numOfPlayers: players }
         setGameFilters(filters => ({
             ...filters,
             ...newFilters
