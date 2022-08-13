@@ -1,6 +1,7 @@
 import React from "react";
 
 export const GameDetail = ({game, myGameIds, setIsMine }) => {
+    //determines if the 'myGameIds' include this game id
     const isMine = myGameIds.includes(game.id)
     const starIfMine = isMine ? "☑" : "☐" 
 
@@ -14,7 +15,7 @@ export const GameDetail = ({game, myGameIds, setIsMine }) => {
             <span onClick={() =>setIsMine(game.id, !isMine)}>{starIfMine}</span>
             <br />
             <p>Number of Players:  {!game.players ? "?" : game.players}</p>
-            <p>Playtime: {game.playtime} minutes</p>
+            <p>Playtime: {game.playtime ? game.playtime.toString() + " minutes" : "?"}</p>
 
             {/* displays Learning complexity and Strategy complexity rounded to the nearest decimal  */}
             <p>Learning complexity: {game.average_learning_complexity ? game.average_learning_complexity.toFixed(1) : "?"} / 5</p>

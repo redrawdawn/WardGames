@@ -18,7 +18,7 @@ export const MyGamesFilter = ({gameFilters, setGameFilters}) => {
     return (<>
         <Button color="dark"
             //className={gameFilters.myGamesOnly ? "" : "selected"}
-            onClick={() => setMyGamesOnlyFilter(false)}>All Game
+            onClick={() => setMyGamesOnlyFilter(false)}>All Games
         </Button>
 
         <Button color="dark"

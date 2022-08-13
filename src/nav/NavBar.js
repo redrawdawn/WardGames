@@ -1,21 +1,30 @@
+
+import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import {  Collapse, Navbar, Nav, NavItem } from 'reactstrap'
 
 
 export const NavBar = () => {
+    const [navbarVisible, setNavbarVisible] = useState(false)
     const navigate = useNavigate()
 
+    const toggle = () => setNavbarVisible(!navbarVisible)
     return (
-        <ul className="navbar">
-            <li className="navbar__item navbar__logout">
-                <Link className="navbar__link" to="" onClick={() => {
-                    localStorage.removeItem("wardgames_user")
-                    navigate("/login", {replace: true})
-                }}>Logout</Link>
-            </li>
-            {/* <li className="navbar__item navbar__gamelist">
-                <Link className="navbar__link" to="gamelist">games</Link>
-            </li> */}
-        </ul>
+        <Navbar className="xnavbar" onClick={toggle}>
+            ☰
+            <Collapse className="navbar" isOpen={navbarVisible} >
+                <Nav>
+                    <NavItem>
+                        <div className="xnavbar__item xnavbar__logout">
+                            <Link className="xnavbar__link" to="" onClick={() => {
+                                localStorage.removeItem("wardgames_user")
+                                navigate("/login", {replace: true})
+                            }}>Logout</Link>
+                        </div>
+                    </NavItem>
+                </Nav>
+            </Collapse>
+        </Navbar>
     )
 }
 

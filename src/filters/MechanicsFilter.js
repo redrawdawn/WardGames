@@ -22,10 +22,13 @@ export const MechanicsFilter = ({gameFilters, setGameFilters}) => {
         }))
     }
 
+    let selectedMechanic = mechanics.find(c => c.id == gameFilters.mechanicsFilter)
+    let label = selectedMechanic ? selectedMechanic.name : "Mechanic"
+
     return (
         <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
-        <DropdownToggle caret color="dark">
-          Mechanics
+        <DropdownToggle caret color="dark" size="sm">
+            {label}
         </DropdownToggle>
         <DropdownMenu dark>
             {
