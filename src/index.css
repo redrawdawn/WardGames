@@ -1,10 +1,25 @@
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  background-color: rgb(228, 228, 228);
+  padding: 1em;
+  border-radius: .8em;
+}
+
+.ward-games {
+  margin-left: 10%;
+}
+
+.navbar {
+  margin-left: 10%;
+  background-color: aquamarine;
+  /* width: 30%; */
 }
 
 code {

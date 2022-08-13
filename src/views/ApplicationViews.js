@@ -7,7 +7,7 @@ export const ApplicationViews = () => {
         <Routes>
             <Route path="/" element={
                 <>
-                    <h1>WardGames</h1>
+                    <h1 className="ward-games">WardGames</h1>
                     
                     <Outlet />
                 </>

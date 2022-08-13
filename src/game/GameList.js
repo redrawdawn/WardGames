@@ -9,6 +9,7 @@ import { PlayTimeFilter } from "../filters/PlayTimeFilter"
 import { SearchBar } from "../filters/SearchBar"
 import { AddToMyGames, GetMyGames, RemoveFromMyGames } from "../modules/MyGamesManager"
 import './gameList.css';
+import { Container } from "reactstrap"
 
 export const GameList = () => {
     let [games, setGames] = useState([])
@@ -16,10 +17,13 @@ export const GameList = () => {
     let [myGameIds, setMyGameIds] = useState([])
 
     useEffect(() => {
+        //gets all the games and sets them to the game state 
         GetGames().then(gs => setGames(gs))
+        //gets all 'myGames', extracts the gameIds and sets them to 'myGameIds' state 
         GetMyGames().then(mgi => setMyGameIds(mgi.map(x => x.gameId)))
     }, [])
 
+    //adds or removes a game from 'myGames'
     const setIsMine = (gameId, isMine) => {
         if (isMine) {
             AddToMyGames(gameId).then(() => {
@@ -39,47 +43,54 @@ export const GameList = () => {
         GetGames(gameFilters).then(gs => setGames(gs))
     }, [gameFilters, myGameIds])
     
-    if (games.length == 0) {
-        return <>
-            <div className="allgames-mygames">
-                        <MyGamesFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
-                    </div>
-                    <SearchBar gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+    //if there are no games this will return "No games found"
+    let noGamesFoundDiv;
 
-                    <br />
-                    <div className="filters-div">
-                        <NumOfPlayersFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                        <PlayTimeFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters} />
-                        <CategoriesFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                        <MechanicsFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                        <button onClick={() => setGameFilters({ myGamesOnly : gameFilters.myGamesOnly})}>Clear Filters</button>
-                    </div>
-            <div>No games found</div>
-        </>
-    } 
+    if (games.length == 0) noGamesFoundDiv = <div>No games found</div>
 
     return (
             <>
-                <div className="allgames-mygames">
-                    <MyGamesFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
-                </div>
-                <SearchBar gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+            <Container>
+                <div className="game-list-filters">
+                    <div className="allgames-mygames">
+                        <MyGamesFilter gameFilters={gameFilters} setGameFilters={setGameFilters} />
+                    </div>
 
-                <br />
-                <div className="filters-div">
-                    <NumOfPlayersFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                    <PlayTimeFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters} />
-                    <CategoriesFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                    <MechanicsFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
-                    <button onClick={() => setGameFilters({ myGamesOnly : gameFilters.myGamesOnly})}>Clear Filters</button>
-                </div>
+                    <br />
+
+                    <SearchBar gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+
+                    <div className="filters-div">
+                        <div className="filter">
+                            <NumOfPlayersFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                        </div>
+                        <div className="filter">
+                            <PlayTimeFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters} />
+                        </div>
+                        <div className="filter">
+                            <CategoriesFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                        </div>
+                        <div className="filter">
+                            <MechanicsFilter className="filter" gameFilters={gameFilters} setGameFilters={setGameFilters}/>
+                        </div>
+                        {/*V this is the 'clear filters' button 
+                        and it is clearing all the flters but keeps 
+                        the current state of the 'myGamesOnly'  filter*/}
+                        <div className="filter">
+                            <button onClick={() => setGameFilters({ myGamesOnly : gameFilters.myGamesOnly})}>Clear Filters</button>
+                        </div>
+                    </div>
+            </div>
+
                 {
                     games.map(game => 
                         { 
-                            //return <div key={game.id} className="game-card">{game.handle}</div>
                             return <Game key={game.id} game={game} setIsMine={setIsMine} myGameIds={myGameIds} setMyGameIds={setMyGameIds}/>
                         })
                 }
+
+                {noGamesFoundDiv}
+                </Container>
             </>
         )
 }

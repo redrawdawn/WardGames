@@ -21,11 +21,13 @@ export const CategoriesFilter = ({gameFilters, setGameFilters}) => {
         }))
     }
 
+    let selectedCategory = categories.find(c => c.id == gameFilters.categoriesFilter)
+    let label = selectedCategory ? selectedCategory.name : "Category"
 
     return (
         <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
-        <DropdownToggle caret color="dark">
-          Categories
+        <DropdownToggle caret color="dark" size="sm">
+            {label}
         </DropdownToggle>
         <DropdownMenu dark>
             {

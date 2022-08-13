@@ -14,10 +14,12 @@ export const PlayTimeFilter = ({gameFilters, setGameFilters}) => {
         }))
     }
 
+    let label = gameFilters.playTimeFilter ? gameFilters.playTimeFilter.toString() + " Minutes" : "Playtime"
+
     return (
         <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
-        <DropdownToggle caret color="dark">
-          Playtime
+        <DropdownToggle caret color="dark" size="sm">
+            {label}
         </DropdownToggle>
         <DropdownMenu dark>
             <DropdownItem><div onClick={() => setFilterValue(10)}>10 minutes</div></DropdownItem>
